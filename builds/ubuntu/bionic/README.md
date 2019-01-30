@@ -28,7 +28,3 @@ docker build -t pivotalio/pcftools:bionic .
 ```
 docker run -it pivotalio/pcftools:bionic
 ```
-
-## Contributing
-
-Pull requests welcomed!  (But as you'll notice there's not much here).

@@ -30,7 +30,3 @@ docker build -t pivotalio/pcftools:xenial .
 ```
 docker run -it pivotalio/pcftools:xenial
 ```
-
-## Contributing
-
-Pull requests welcomed!  (But as you'll notice there's not much here).
