@@ -9,14 +9,31 @@ ENV BOSH_VERSION=5.4.0 \
     CREDHUB_VERSION=2.2.1 \
     FLY_VERSION=4.2.2 \
     OM_VERSION=0.51.0 \
-    PIVNET_VERSION=0.0.55
+    PIVNET_VERSION=0.0.55 \
+    TERRAFORM_VERSION=0.11.11
 
-# In addition it will install the latest available versions of: jq, git, ruby-dev, cf-uaac
+# In addition it will install the latest available versions of: aws, az, gcloud, jq, git, ruby-dev, cf-uaac
 
 RUN apt update && \
-      apt install build-essential curl git jq ruby-dev sudo wget -y && \
+      apt install build-essential curl git jq python-pip python-dev ruby-dev sudo wget unzip -y && \
+      apt install apt-transport-https lsb-release software-properties-common dirmngr -y && \
+      sudo pip install --upgrade pip && \
+      sudo pip install --upgrade virtualenv && \
       useradd -m docker && echo "docker:docker" | chpasswd && \
       adduser docker sudo && \
+      pip install awscli && \
+      export AZ_REPO=$(lsb_release -cs) && \
+      echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+        sudo tee /etc/apt/sources.list.d/azure-cli.list && \
+      sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
+        --keyserver packages.microsoft.com \
+        --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF && \
+      apt update && \
+      apt install azure-cli && \
+      export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
+      echo "deb http://packages.cloud.google.com/apt ${CLOUD_SDK_REPO} main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+      curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+      apt update -y && apt install google-cloud-sdk -y && \
       gem install cf-uaac && \
       wget https://github.com/cloudfoundry/bosh-cli/releases/download/v${BOSH_VERSION}/bosh-cli-${BOSH_VERSION}-linux-amd64 && \
       mv bosh-cli-${BOSH_VERSION}-linux-amd64 bosh && \
@@ -39,7 +56,10 @@ RUN apt update && \
       wget https://github.com/pivotal-cf/pivnet-cli/releases/download/v${PIVNET_VERSION}/pivnet-linux-amd64-${PIVNET_VERSION} && \
       mv pivnet-linux-amd64-${PIVNET_VERSION} pivnet && \
       chmod +x pivnet && \
-      sudo mv pivnet /usr/local/bin
+      sudo mv pivnet /usr/local/bin && \
+      wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+      unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+      sudo mv terraform /usr/local/bin
 
 USER docker
 
