@@ -21,31 +21,12 @@ Tools include:
 * a Virtual machine with Docker installed
 * the Dockerfile
 
-## Iaas tutorials
+## Distributions
 
-It's fairly simple to spin up an [Ubuntu Xenial](http://releases.ubuntu.com/16.04/) VM on [AWS](https://aws.amazon.com/marketplace/pp/B07JGBZNQJ), [Azure](https://azuremarketplace.microsoft.com/en/marketplace/apps/Canonical.UbuntuServer?tab=PlansAndPrice), or [GCP](https://console.cloud.google.com/marketplace/details/ubuntu-os-cloud/ubuntu-xenial?pli=1).
+You will find Dockefiles for the following images underneath the `builds` folder
 
-* [AWS](https://medium.com/@jeevananandanne/guide-to-set-up-ubuntu-16-04-on-aws-ec2-instance-745f3433f16)
-* [Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal)
-* [GCP](https://cloud.google.com/compute/docs/quickstart-linux)
-
-## How to clone
-
-```
-git clone https://github/pacphi/pcftools
-```
-
-## How to build
-
-```
-docker build -t pivotalio/pcftools:1.0.0 .
-```
-
-## How to run
-
-```
-docker run -it pivotalio/pcftools:1.0.0
-```
+* Ubuntu Xenial (16.04)
+* Ubuntu Bionic Beaver (18.04)
 
 ## Contributing
 
