@@ -29,6 +29,10 @@ It's fairly simple to spin up an [Ubuntu Xenial](http://releases.ubuntu.com/16.0
 * [Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal)
 * [GCP](https://cloud.google.com/compute/docs/quickstart-linux)
 
+## How to install Docker on Ubuntu Xenial
+
+Digital Ocean has a nice write-up [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04).
+
 ## How to clone
 
 ```
