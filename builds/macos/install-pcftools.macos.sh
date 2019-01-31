@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# A curated collection of software to be installed via Homebrew
-# to get up and running with a curated set of tools for use by Cloud Foundry operators.
+# A curated collection of software to be installed manually and via
+# package management for use by Cloud Foundry operators.
 # @author Chris Phillipson
 # @see http://brew.sh/, https://caskroom.github.io/, and https://github.com/cloudfoundry/homebrew-tap
 
