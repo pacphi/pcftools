@@ -17,7 +17,8 @@ ENV BOSH_VERSION=5.4.0 \
 
 # In addition it will install the latest available versions of: aws, az, cf-uaac, gcloud, git, jq, kubectl, ruby-dev
 
-RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
+RUN mkdir downloads && cd downloads && \
+      yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
       yum -y update && \
       yum -y install curl git jq python36u python36u-libs python36u-devel python36u-pip sudo unzip wget && \
       yum -y install gcc-c++ patch readline readline-devel which zlib zlib-devel \

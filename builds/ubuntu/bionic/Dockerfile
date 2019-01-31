@@ -16,7 +16,8 @@ ENV BOSH_VERSION=5.4.0 \
 
 # In addition it will install the latest available versions of: aws, az, cf-uaac, gcloud, git, jq, kubectl, ruby-dev
 
-RUN apt update && \
+RUN mkdir downloads && cd downloads && \
+      apt update && \
       apt install build-essential curl git jq python-pip python-dev ruby-dev sudo wget -y && \
       apt install apt-transport-https lsb-release software-properties-common dirmngr -y && \
       sudo pip install --upgrade pip && \
