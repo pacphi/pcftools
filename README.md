@@ -8,12 +8,14 @@ Tools include:
 * [az](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
 * [bosh](https://github.com/cloudfoundry/bosh-cli)
 * [cf](https://github.com/cloudfoundry/cli)
+* [cred-alert](https://github.com/pivotal-cf/cred-alert)
 * [credhub](https://github.com/cloudfoundry-incubator/credhub-cli)
 * [curl](https://curl.haxx.se)
 * [fly](https://github.com/concourse/concourse)
 * [gcloud](https://cloud.google.com/sdk/)
 * [git](https://git-scm.com)
 * [jq](https://stedolan.github.io/jq/)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [om](https://github.com/pivotal-cf/om)
 * [pivnet](https://github.com/pivotal-cf/pivnet-cli)
 * [terraform](https://www.terraform.io/intro/index.html)
@@ -29,8 +31,17 @@ Tools include:
 
 You will find `Dockerfile`s for the following images underneath the `builds` folder
 
-* Ubuntu Xenial (16.04)
-* Ubuntu Bionic Beaver (18.04)
+- [x] CentOS 7
+- [x] Ubuntu Xenial (16.04)
+- [x] Ubuntu Bionic Beaver (18.04)
+
+## Roadmap 
+
+Forthcoming options with alternative packaging
+
+- [ ] macOS
+- [ ] openSUSE Tumbleweed
+- [ ] Windows Server 2016
 
 ## Contributing
 

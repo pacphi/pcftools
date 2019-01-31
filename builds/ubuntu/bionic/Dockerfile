@@ -6,13 +6,15 @@ LABEL author=cphillipson@pivotal.io
 
 ENV BOSH_VERSION=5.4.0 \
     CF_VERSION=6.42.0 \
+    CREDALERT_VERSION=2018-12-07-21-29-15 \
     CREDHUB_VERSION=2.2.1 \
     FLY_VERSION=4.2.2 \
+    KUBECTL_VERSION=1.13.0 \
     OM_VERSION=0.51.0 \
     PIVNET_VERSION=0.0.55 \
     TERRAFORM_VERSION=0.11.11
 
-# In addition it will install the latest available versions of: aws, az, gcloud, jq, git, ruby-dev, cf-uaac
+# In addition it will install the latest available versions of: aws, az, cf-uaac, gcloud, git, jq, kubectl, ruby-dev
 
 RUN apt update && \
       apt install build-essential curl git jq python-pip python-dev ruby-dev sudo wget -y && \
@@ -42,6 +44,10 @@ RUN apt update && \
       wget -O cf.tgz "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_VERSION}&source=github-rel" && \
       tar -xvf cf.tgz && \
       sudo mv cf /usr/local/bin && \
+      wget https://github.com/pivotal-cf/cred-alert/releases/download/${CREDALERT_VERSION}/cred-alert-cli_linux && \
+      mv cred-alert-cli_linux cred-alert && \
+      chmod +x cred-alert && \
+      sudo mv cred-alert /usr/local/bin && \
       wget https://github.com/cloudfoundry-incubator/credhub-cli/releases/download/${CREDHUB_VERSION}/credhub-linux-${CREDHUB_VERSION}.tgz && \
       tar -xvzf credhub-linux-${CREDHUB_VERSION}.tgz && \
       sudo mv credhub /usr/local/bin && \
@@ -49,6 +55,9 @@ RUN apt update && \
       mv fly_linux_amd64 fly && \
       chmod +x fly && \
       sudo mv fly /usr/local/bin && \
+      curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
+      chmod +x kubectl && \
+      sudo mv kubectl /usr/local/bin && \
       wget https://github.com/pivotal-cf/om/releases/download/${OM_VERSION}/om-linux && \
       mv om-linux om && \
       chmod +x om && \

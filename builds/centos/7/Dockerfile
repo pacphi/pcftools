@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM centos:7
 LABEL author=cphillipson@pivotal.io
 
 # Welcome to PCF-tools!
@@ -9,6 +9,7 @@ ENV BOSH_VERSION=5.4.0 \
     CREDALERT_VERSION=2018-12-07-21-29-15 \
     CREDHUB_VERSION=2.2.1 \
     FLY_VERSION=4.2.2 \
+    GOOGLE_CLOUD_SDK_VERSION=232.0.0 \
     KUBECTL_VERSION=1.13.0 \
     OM_VERSION=0.51.0 \
     PIVNET_VERSION=0.0.55 \
@@ -16,26 +17,29 @@ ENV BOSH_VERSION=5.4.0 \
 
 # In addition it will install the latest available versions of: aws, az, cf-uaac, gcloud, git, jq, kubectl, ruby-dev
 
-RUN apt update && \
-      apt install build-essential curl git jq python-pip python-dev ruby-dev sudo wget unzip -y && \
-      apt install apt-transport-https lsb-release software-properties-common dirmngr -y && \
-      sudo pip install --upgrade pip && \
-      sudo pip install --upgrade virtualenv && \
-      useradd -m docker && echo "docker:docker" | chpasswd && \
-      adduser docker sudo && \
-      pip install awscli && \
-      export AZ_REPO=$(lsb_release -cs) && \
-      echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
-        sudo tee /etc/apt/sources.list.d/azure-cli.list && \
-      sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
-        --keyserver packages.microsoft.com \
-        --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF && \
-      apt update && \
-      apt install azure-cli && \
-      export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
-      echo "deb http://packages.cloud.google.com/apt ${CLOUD_SDK_REPO} main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-      curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-      apt update -y && apt install google-cloud-sdk -y && \
+RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
+      yum -y update && \
+      yum -y install curl git jq python36u python36u-libs python36u-devel python36u-pip sudo unzip wget && \
+      yum -y install gcc-c++ patch readline readline-devel which zlib zlib-devel \
+        libyaml-devel libffi-devel openssl-devel make \
+        bzip2 autoconf automake libtool bison iconv-devel sqlite-devel && \
+      adduser docker && \
+      gpasswd -a docker wheel && \
+      pip3.6 install awscli && \
+      sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
+      sudo sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo' && \
+      sudo yum -y install azure-cli && \
+      curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GOOGLE_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+      tar -xvf google-cloud-sdk-${GOOGLE_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+      ./google-cloud-sdk/install.sh && \
+      git clone https://github.com/sstephenson/rbenv.git ~/.rbenv && \
+      cd ~/.rbenv && src/configure && make -C src && cd ~ && \
+      git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build && \
+      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc && \
+      echo 'eval "$(rbenv init -)"' >> ~/.bashrc && \
+      source ~/.bashrc && \
+      rbenv install 2.6.1 && rbenv global 2.6.1 && \
+      echo "gem: --no-ri --no-doc" > ~/.gemrc && \
       gem install cf-uaac && \
       wget https://github.com/cloudfoundry/bosh-cli/releases/download/v${BOSH_VERSION}/bosh-cli-${BOSH_VERSION}-linux-amd64 && \
       mv bosh-cli-${BOSH_VERSION}-linux-amd64 bosh && \
