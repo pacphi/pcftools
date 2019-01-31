@@ -1,6 +1,6 @@
 # Welcome to PCF Tools
 
-This is a [Docker](https://www.docker.com) image that hosts the most commonly used tools that a Pivotal [Cloud Foundry](https://www.cloudfoundry.org) operator would need to stand-up and operate a [control-plane](https://github.com/pivotal/control-plane) via a [jump-box](https://en.wikipedia.org/wiki/Jump_server).  The jump-box is a [VM](https://en.wikipedia.org/wiki/Virtual_machine) which has Docker available.
+[Docker](https://www.docker.com) images and scripts that provision the most commonly used tools a Pivotal [Cloud Foundry](https://www.cloudfoundry.org) operator would need to stand-up and operate a [control-plane](https://github.com/pivotal/control-plane) via (a) a [jump-box](https://en.wikipedia.org/wiki/Jump_server) [VM](https://en.wikipedia.org/wiki/Virtual_machine) which has Docker available or (b) a desktop computer or laptop.
 
 Tools include:
 
@@ -24,24 +24,32 @@ Tools include:
 
 ## Prerequisites
 
+`pcftools` is built and installed in one of two ways and the miminum requirements are specified below.
+
+### with Docker
+
 * a Virtual machine with Docker installed
-* a Dockerfile
+* the Dockerfile
+
+### with Install scripts
+
+* a pre-installed, supported operating system
 
 ## Distributions
 
-You will find `Dockerfile`s for the following images underneath the `builds` folder
+You will find `Dockerfile`s for the following images
 
 - [x] CentOS 7
 - [x] openSUSE Leap
 - [x] Ubuntu Xenial (16.04)
 - [x] Ubuntu Bionic Beaver (18.04)
 
-## Roadmap 
+and scripts for
 
-Forthcoming options with alternative packaging
-
-- [ ] macOS
+- [x] macOS
 - [ ] Windows Server 2016
+
+underneath the `builds` folder
 
 ## Contributing
 
