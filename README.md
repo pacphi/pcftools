@@ -32,6 +32,7 @@ Tools include:
 You will find `Dockerfile`s for the following images underneath the `builds` folder
 
 - [x] CentOS 7
+- [x] openSUSE Leap
 - [x] Ubuntu Xenial (16.04)
 - [x] Ubuntu Bionic Beaver (18.04)
 
@@ -40,7 +41,6 @@ You will find `Dockerfile`s for the following images underneath the `builds` fol
 Forthcoming options with alternative packaging
 
 - [ ] macOS
-- [ ] openSUSE Tumbleweed
 - [ ] Windows Server 2016
 
 ## Contributing

@@ -1,8 +1,8 @@
-FROM centos:7
+FROM opensuse/leap:15.0
 LABEL author=cphillipson@pivotal.io
 
 # Welcome to PCF-tools!
-# This image installs the following versions of CLIs on a CentOS 7 image
+# This image installs the following versions of CLIs on an OpenSUSE Leap image
 
 ENV BOSH_VERSION=5.4.0 \
     CF_VERSION=6.42.0 \
@@ -18,15 +18,14 @@ ENV BOSH_VERSION=5.4.0 \
 # In addition it will install the latest available versions of: aws, az, cf-uaac, gcloud, git, jq, kubectl, ruby-dev
 
 RUN mkdir downloads && cd downloads && \
-      yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
-      yum -y update && \
-      yum -y install curl git jq python36u python36u-libs python36u-devel python36u-pip sudo unzip wget && \
-      yum -y install gcc-c++ patch readline readline-devel which zlib zlib-devel \
+      zypper --non-interactive update && \
+      zypper --non-interactive install curl git jq python3 python3-pip sudo unzip wget yum && \
+      zypper --non-interactive install gcc-c++ patch readline readline-devel which zlib zlib-devel \
         libyaml-devel libffi-devel openssl-devel make \
-        bzip2 autoconf automake libtool bison iconv-devel sqlite-devel && \
-      adduser docker && \
-      gpasswd -a docker wheel && \
-      pip3.6 install awscli && \
+        bzip2 autoconf automake libtool bison sqlite-devel && \
+      useradd --create-home docker && \
+      echo 'docker  ALL=(ALL:ALL) ALL' >> /etc/sudoers && \
+      zypper install aws-cli && \
       sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
       sudo sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo' && \
       sudo yum -y install azure-cli && \

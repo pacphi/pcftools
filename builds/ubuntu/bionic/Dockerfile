@@ -2,7 +2,7 @@ FROM ubuntu:bionic
 LABEL author=cphillipson@pivotal.io
 
 # Welcome to PCF-tools!
-# This image installs the following versions of CLIs on an Ubuntu Xenial image
+# This image installs the following versions of CLIs on an Ubuntu Bionic Beaver image
 
 ENV BOSH_VERSION=5.4.0 \
     CF_VERSION=6.42.0 \
