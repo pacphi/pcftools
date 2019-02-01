@@ -8,18 +8,18 @@
 set -e
 
 export CREDALERT_VERSION=2018-12-07-21-29-15
-export OM_VERSION=0.51.0
 
 # Install Homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 # Install Caskrooms
 brew tap caskroom/cask
+brew tap starkandwayne/cf
 brew tap cloudfoundry/tap
 brew tap caskroom/versions
 
 # Declare installation packages
-brews=( "awscli" "azure-cli" "bosh-cli" "cf-cli" "credhub-cli" "go" "jq" "kubernetes-cli" "kubectx" "wget" "git" "openssl" "python3" "ruby" "pivnet-cli" "terraform" "tmux" "wireshark" "wget" "zsh" )
+brews=( "awscli" "azure-cli" "bosh-cli" "cf-cli" "credhub-cli" "go" "starkandwayne/cf/govc" "jq" "kubernetes-cli" "kubectx" "wget" "git" "starkandwayne/cf/om" "openssl" "python3" "ruby" "pivnet-cli" "starkandwayne/cf/riff" "terraform" "tmux" "wireshark" "wget" "zsh" )
 casks=( "google-cloud-sdk" "iterm2" "sourcetree" "visual-studio-code" )
 
 # Install packages
@@ -41,9 +41,3 @@ wget https://github.com/pivotal-cf/cred-alert/releases/download/${CREDALERT_VERS
 mv cred-alert-cli_darwin cred-alert
 chmod +x cred-alert
 sudo mv cred-alert /usr/local/bin
-
-wget https://github.com/pivotal-cf/om/releases/download/${OM_VERSION}/om-darwin
-mv om-darwin om
-chmod +x om
-sudo mv om /usr/local/bin
-
