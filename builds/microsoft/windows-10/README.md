@@ -1,10 +1,10 @@
-# Windows script
+# Windows 10 script
 
-We're going to use a package manager for Windows 10 called [Chocolatey](https://chocolatey.org) to install the majority of tools.  For a handful more we'll source release binaries directly from Github repositories.
-
-## Supported versions
+We're going to use a package manager for [Windows 10](https://www.microsoft.com/en-us/windows/get-windows-10) called [Chocolatey](https://chocolatey.org) to install the majority of tools.  For a handful more we'll source release binaries directly from Github repositories.
 
 > See Chocolatey installation requirements [here](https://github.com/chocolatey/choco/wiki/Installation#requirements).
+
+## Supported versions
 
 - [x] Windows 10
 
