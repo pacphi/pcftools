@@ -8,18 +8,20 @@
 set -e
 
 export CREDALERT_VERSION=2018-12-07-21-29-15
+export TEXPLATE_VERSION=0.3.0
 
 # Install Homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-# Install Caskrooms
+# Configure Taps
 brew tap caskroom/cask
-brew tap starkandwayne/cf
-brew tap cloudfoundry/tap
 brew tap caskroom/versions
+brew tap cloudfoundry/tap
+brew tap genevieve/tap
+brew tap starkandwayne/cf
 
 # Declare installation packages
-brews=( "awscli" "azure-cli" "bosh-cli" "cf-cli" "credhub-cli" "go" "starkandwayne/cf/govc" "jq" "kubernetes-cli" "kubectx" "wget" "git" "starkandwayne/cf/om" "openssl" "python3" "ruby" "pivnet-cli" "starkandwayne/cf/riff" "terraform" "tmux" "wireshark" "wget" "zsh" )
+brews=( "awscli" "azure-cli" "az-automation" "bosh-cli" "cf-cli" "credhub-cli" "go" "starkandwayne/cf/govc" "jq" "kubernetes-cli" "kubectx" "wget" "git" "starkandwayne/cf/om" "openssl" "python3" "ruby" "pivnet-cli" "starkandwayne/cf/riff" "terraform" "tmux" "wireshark" "wget" "zsh" )
 casks=( "google-cloud-sdk" "iterm2" "sourcetree" "visual-studio-code" )
 
 # Install packages
@@ -41,3 +43,8 @@ wget https://github.com/pivotal-cf/cred-alert/releases/download/${CREDALERT_VERS
 mv cred-alert-cli_darwin cred-alert
 chmod +x cred-alert
 sudo mv cred-alert /usr/local/bin
+
+wget https://github.com/pivotal-cf/texplate/releases/download/v${TEXPLATE_VERSION}/texplate_darwin_amd64
+mv texplate_darwin_amd64 texplate
+chmod +x texplate
+sudo mv texplate /usr/local/bin

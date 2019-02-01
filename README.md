@@ -19,6 +19,7 @@ Tools included
  - [x] [om](https://github.com/pivotal-cf/om)
  - [x] [pivnet](https://github.com/pivotal-cf/pivnet-cli)
  - [x] [terraform](https://www.terraform.io/intro/index.html)
+ - [x] [texplate](https://github.com/pivotal-cf/texplate)
  - [x] [uaac](https://github.com/cloudfoundry/cf-uaac)
  - [x] [wget](https://www.gnu.org/software/wget/)
 

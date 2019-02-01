@@ -36,4 +36,5 @@ install-pcftools.pt2.bat
 
 ## What's missing? =(
 
+* texplate
 * uaac

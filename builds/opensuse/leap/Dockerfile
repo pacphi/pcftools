@@ -13,7 +13,8 @@ ENV BOSH_VERSION=5.4.0 \
     KUBECTL_VERSION=1.13.0 \
     OM_VERSION=0.51.0 \
     PIVNET_VERSION=0.0.55 \
-    TERRAFORM_VERSION=0.11.11
+    TERRAFORM_VERSION=0.11.11 \
+    TEXPLATE_VERSION=0.3.0
 
 # In addition it will install the latest available versions of: aws, az, cf-uaac, gcloud, git, jq, kubectl, ruby-dev
 
@@ -72,7 +73,11 @@ RUN mkdir downloads && cd downloads && \
       sudo mv pivnet /usr/local/bin && \
       wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
       unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-      sudo mv terraform /usr/local/bin
+      sudo mv terraform /usr/local/bin && \
+      wget https://github.com/pivotal-cf/texplate/releases/download/v${TEXPLATE_VERSION}/texplate_linux_amd64 && \
+      mv texplate_linux_amd64 texplate && \
+      chmod +x texplate && \
+      sudo mv texplate /usr/local/bin
 
 USER docker
 
