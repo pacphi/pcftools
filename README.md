@@ -36,6 +36,7 @@ Tools included
 
  * a pre-installed, supported operating system
 
+
 ## Distributions
 
 You will find `Dockerfile`s for the following images
@@ -52,6 +53,16 @@ and scripts for
 - [ ] Windows Server 2016
 
 underneath the `builds` folder
+
+## Additional notes
+
+Oftentimes we're operating in a restricted environment where resources that get created within a public cloud are not assigned public IP addresses. In this situation we may desire a network topology where the jumpbox is either in its own virtual network peered with or stood up within an existing virtual network that hosts a curated collection of common services for CI/CD.
+
+As mentioned in the prerequisites `pcftools` assumes a jumpbox already exists.  If you're looking to bootstrap a jumpbox within a new virtual network employing Terraform, have a look at the following Github repositories for inspiration
+
+* [terraforming-aws](https://github.com/pivotal-cf/terraforming-aws)
+* [terraforming-azure](https://github.com/pivotal-cf/terraforming-azure)
+* [terraforming-gcp](https://github.com/pivotal-cf/terraforming-gcp)
 
 ## Contributing
 
