@@ -1,10 +1,9 @@
 <# Installs PCF Tools on Windows 2016 Server :: part 2 #>
 
-Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::tls12
 
 <# cf #>
 $url = "https://cli.run.pivotal.io/stable?release=windows64&source=github"
-$filename = $PSScriptRoot\downloads\cfcli-installer.zip
+$filename = "$PSScriptRoot\downloads\cfcli-installer.zip"
 $start_time = Get-Date
 Write-Output "Downloading cf-cli..."
 Start-BitsTransfer -Source $url -Destination $filename
@@ -16,7 +15,7 @@ $exeProcess = Start-Process -FilePath $f -ArgumentList "/S","/v","/qn" -NoNewWin
 
 <# credhub #>
 $url = "https://github.com/cloudfoundry-incubator/credhub-cli/releases/download/2.2.1/credhub-windows-2.2.1.tgz"
-$filename = $PSScriptRoot\downloads\credhub-cli.tgz
+$filename = "$PSScriptRoot\downloads\credhub-cli.tgz"
 $start_time = Get-Date
 Write-Output "Downloading credhub-cli..."
 Start-BitsTransfer -Source $url -Destination $filename
@@ -28,7 +27,7 @@ Move-Item -Path "$PSScriptRoot\downloads\credhub.exe" -Destination [System.Envir
 
 <# terraform #>
 $url = "https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_windows_amd64.zip"
-$filename = $PSScriptRoot\downloads\terraform.zip
+$filename = "$PSScriptRoot\downloads\terraform.zip"
 $start_time = Get-Date
 Write-Output "Downloading terraform..."
 Start-BitsTransfer -Source $url -Destination $filename

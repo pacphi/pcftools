@@ -1,9 +1,7 @@
 <# Installs PCF Tools on Windows 2016 Server :: part 1 #>
 
-Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::tls12
-
-<# Import helper function for installing MSI #>
-. $PSScriptRoot\install-msi.ps1
+Install-Module -Name Carbon
+Install-Module -Name MSI
 
 <# Create a directory that will be the home for all downloaded artifacts #>
 Write-Output "Creating downloads directory..."
@@ -20,7 +18,7 @@ Write-Output "Downloading aws-cli..."
 Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing aws-cli..."
-Install-Msi -Path $filename
+Install-MSIProduct -Path $filename -PassThru -Force
 
 <# azure-cli #>
 $url = "https://aka.ms/installazurecliwindows"
@@ -30,7 +28,7 @@ Write-Output "Downloading azure-cli..."
 Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing azure-cli..."
-Install-Msi -Path $filename
+Install-MSIProduct -Path $filename -PassThru -Force
 
 <# google cloud sdk #>
 $url = "https://dl.google.com/dl/cloudsdk/channels/rapid/GoogleCloudSDKInstaller.exe"
@@ -75,7 +73,7 @@ Write-Output "Downloading go-lang..."
 Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing go-lang..."
-Install-Msi -Path $filename
+Install-MSIProduct -Path $filename -PassThru -Force
 
 <# sourcetree #>
 $url = "https://product-downloads.atlassian.com/software/sourcetree/windows/ga/SourceTreeSetup-3.0.15.exe"
@@ -105,7 +103,7 @@ Write-Output "Downloading 7zip..."
 Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing 7zip..."
-Install-Msi -Path $filename
+Install-MSIProduct -Path $filename -PassThru -Force
 
 
 <# We're cheating here a bit and relocating all binaries we download from Github into #>

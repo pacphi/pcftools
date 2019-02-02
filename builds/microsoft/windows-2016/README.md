@@ -1,6 +1,6 @@
 # Windows 2016 script
 
-We're going to employ a Powershell script to install the majority of tools.  We'll target release binaries directly from public sources like product site download pages and Github repositories.  
+We're going to employ a Powershell script to install the majority of tools.  We'll target release binaries directly from public sources like product site download pages and Github repositories.
 
 ## Supported versions
 
