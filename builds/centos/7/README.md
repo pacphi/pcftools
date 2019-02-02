@@ -8,12 +8,6 @@ It's fairly simple to spin up an [CentOS 7](https://wiki.centos.org/FrontPage) V
 
 Linuxize has a nice write-up [here](https://linuxize.com/post/how-to-install-and-use-docker-on-centos-7/).
 
-## How to clone
-
-```
-git clone https://github/pacphi/pcftools
-```
-
 ## How to build
 
 ```

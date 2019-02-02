@@ -12,12 +12,6 @@ For GCP your marketplace options are limited to the enterprise variants, see [th
 
 OpenSUSE wiki article [here](https://en.opensuse.org/SDB:Docker).
 
-## How to clone
-
-```
-git clone https://github/pacphi/pcftools
-```
-
 ## How to build
 
 ```

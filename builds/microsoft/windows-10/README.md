@@ -13,12 +13,6 @@ and backwards compatible with
 - [x] Windows 7
 - [x] Windows 8
 
-## How to clone
-
-```
-git clone https://github/pacphi/pcftools
-```
-
 ## How to install
 
 Open a [cmd](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands#BKMK_OVR) shell as the Administrator

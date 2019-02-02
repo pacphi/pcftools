@@ -10,12 +10,6 @@ and backwards compatible with
 
 - [x] Windows 2012 R2
 
-## How to clone
-
-```
-git clone https://github/pacphi/pcftools
-```
-
 ## How to install
 
 Open a Powershell shell as the Administrator

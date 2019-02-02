@@ -37,6 +37,11 @@ Tools included
 
  * a pre-installed, supported operating system
 
+## How to clone
+
+```
+git clone https://github/pacphi/pcftools
+```
 
 ## Distributions
 
