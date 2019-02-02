@@ -11,8 +11,8 @@ Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Start-Process -FilePath "7z x cfcli-installer.zip"
 Write-Output "Installing cf-cli..."
-$pathvargs = { $PSScriptRoot\downloads\cf_installer.exe /S /v/qn }
-Invoke-Command -ScriptBlock $pathvargs
+$f = "$PSScriptRoot\downloads\cf_installer.exe"
+$exeProcess = Start-Process -FilePath $f -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
 
 <# credhub #>
 $url = "https://github.com/cloudfoundry-incubator/credhub-cli/releases/download/2.2.1/credhub-windows-2.2.1.tgz"
@@ -24,7 +24,7 @@ Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Start-Process -FilePath "7z x credhub-cli.tgz"
 Start-Process -FilePath "7z x credhub-cli.tar"
 Write-Output "Installing credhub-cli..."
-Move-Item -Path $PSScriptRoot\downloads\credhub.exe -Destination [System.Environment]::SystemDirectory
+Move-Item -Path "$PSScriptRoot\downloads\credhub.exe" -Destination [System.Environment]::SystemDirectory
 
 <# terraform #>
 $url = "https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_windows_amd64.zip"
@@ -35,7 +35,7 @@ Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Start-Process -FilePath "7z x terraform.zip"
 Write-Output "Installing terraform..."
-Move-Item -Path $PSScriptRoot\downloads\terraform.exe -Destination [System.Environment]::SystemDirectory
+Move-Item -Path "$PSScriptRoot\downloads\terraform.exe" -Destination [System.Environment]::SystemDirectory
 
 <# Now we'll cleanup after ourselves #>
 Write-Output "Deleting downloads directory..."
