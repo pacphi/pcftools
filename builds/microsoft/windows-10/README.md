@@ -31,10 +31,12 @@ install-pcftools.pt1.bat
 Open another cmd shell as the Administrator
 
 ```
+cd builds\microsoft\windows-10
 install-pcftools.pt2.bat
 ```
 
 ## What's missing? =(
 
+* cred-alert
 * texplate
 * uaac
