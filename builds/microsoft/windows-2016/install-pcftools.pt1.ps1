@@ -45,7 +45,8 @@ $url = "https://github.com/git-for-windows/git/releases/download/v2.20.1.windows
 $filename = "$PSScriptRoot\downloads\git-installer.exe"
 $start_time = Get-Date
 Write-Output "Downloading git..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing git..."
 $exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
@@ -73,6 +74,16 @@ Write-Output "Downloading go-lang..."
 Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing go-lang..."
+Install-MSIProduct -Path $filename -PassThru -Force
+
+<# .net framework 4.7.x #>
+$url = "https://dotnet.microsoft.com/download/thank-you/net472"
+$filename = "$PSScriptRoot\downloads\dotnet472.exe"
+$start_time = Get-Date
+Write-Output "Downloading .Net Framework 4.7.2..."
+Start-BitsTransfer -Source $url -Destination $filename
+Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+Write-Output "Installing .Net Framework 4.7.2..."
 Install-MSIProduct -Path $filename -PassThru -Force
 
 <# sourcetree #>
@@ -114,7 +125,8 @@ $url = "https://github.com/cloudfoundry/bosh-cli/releases/download/v5.4.0/bosh-c
 $filename = "$PSScriptRoot\downloads\bosh.exe"
 $start_time = Get-Date
 Write-Output "Downloading bosh..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing bosh..."
 Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
@@ -124,7 +136,8 @@ $url = "https://github.com/concourse/fly/releases/download/v4.2.2/fly_windows_am
 $filename = "$PSScriptRoot\downloads\fly.exe"
 $start_time = Get-Date
 Write-Output "Downloading fly..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing fly..."
 Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
@@ -134,7 +147,8 @@ $url = "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe"
 $filename = "$PSScriptRoot\downloads\jq.exe"
 $start_time = Get-Date
 Write-Output "Downloading jq..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing jq..."
 Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
@@ -144,7 +158,8 @@ $url = "https://github.com/pivotal-cf/om/releases/download/0.51.0/om-windows.exe
 $filename = "$PSScriptRoot\downloads\om.exe"
 $start_time = Get-Date
 Write-Output "Downloading om..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing om..."
 Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
@@ -154,7 +169,8 @@ $url = "https://github.com/pivotal-cf/pivnet-cli/releases/download/v0.0.55/pivne
 $filename = "$PSScriptRoot\downloads\pivnet.exe"
 $start_time = Get-Date
 Write-Output "Downloading pivnet..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing pivnet..."
 Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory

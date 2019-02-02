@@ -6,7 +6,8 @@ $url = "https://cli.run.pivotal.io/stable?release=windows64&source=github"
 $filename = "$PSScriptRoot\downloads\cfcli-installer.zip"
 $start_time = Get-Date
 Write-Output "Downloading cf-cli..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Start-Process -FilePath "7z x cfcli-installer.zip"
 Write-Output "Installing cf-cli..."
@@ -18,7 +19,8 @@ $url = "https://github.com/cloudfoundry-incubator/credhub-cli/releases/download/
 $filename = "$PSScriptRoot\downloads\credhub-cli.tgz"
 $start_time = Get-Date
 Write-Output "Downloading credhub-cli..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Start-Process -FilePath "7z x credhub-cli.tgz"
 Start-Process -FilePath "7z x credhub-cli.tar"
@@ -30,7 +32,8 @@ $url = "https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_windo
 $filename = "$PSScriptRoot\downloads\terraform.zip"
 $start_time = Get-Date
 Write-Output "Downloading terraform..."
-Start-BitsTransfer -Source $url -Destination $filename
+<#Start-BitsTransfer -Source $url -Destination $filename #>
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Start-Process -FilePath "7z x terraform.zip"
 Write-Output "Installing terraform..."
