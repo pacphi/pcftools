@@ -6,12 +6,6 @@ We're going to use a package manager for MacOS called [Homebrew](https://brew.sh
 
 - [x] macOS Mojave
 
-## How to clone
-
-```
-git clone https://github/pacphi/pcftools
-```
-
 ## How to install
 
 ```

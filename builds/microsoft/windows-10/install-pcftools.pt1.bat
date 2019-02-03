@@ -27,6 +27,7 @@ set Arr[16]=wget
 set Arr[17]=curl
 set Arr[18]=7zip
 set Arr[19]=postman
+set Arr[20]=psscriptanalyzer
 
 set "x=0"
 
