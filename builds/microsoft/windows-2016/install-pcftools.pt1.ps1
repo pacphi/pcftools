@@ -1,5 +1,7 @@
 <# Installs PCF Tools on Windows 2016 Server :: part 1 #>
 
+$sysdir = "C:\Windows\System32"
+
 Install-Module -Name Carbon
 Install-Module -Name MSI
 
@@ -41,20 +43,37 @@ Write-Output "Installing gcloud-sdk..."
 $exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
 
 <# git #>
-$url = "https://github.com/git-for-windows/git/releases/download/v2.20.1.windows.1/Git-2.20.1-64-bit.exe"
-$filename = "$PSScriptRoot\downloads\git-installer.exe"
-$start_time = Get-Date
-Write-Output "Downloading git..."
-<#Start-BitsTransfer -Source $url -Destination $filename #>
+$url = "https://raw.githubusercontent.com/tomlarse/Install-Git/master/Install-Git/Install-Git.ps1"
+$filename = "$PSScriptRoot\downloads\Install-Git.ps1"
+Write-Output "Fetching install script for git..."
 Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
-Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing git..."
-$exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
+& $filename
 
 <# kubectl #>
-Write-Output "Installing kubectl..."
-Install-Script -Name install-kubectl -Scope CurrentUser -Force
-install-kubectl.ps1 -DownloadLocation ./kubeadmin
+$Downloadlocation = $sysdir
+$uri = "https://kubernetes.io/docs/tasks/tools/install-kubectl/"
+Write-Host -ForegroundColor White "==>Getting download link from $uri"
+$req = Invoke-WebRequest -UseBasicParsing -Uri $uri
+try
+    {
+        Write-Host -ForegroundColor White "==>analyzing Downloadlink"
+        $downloadlink = ($req.Links | where href -Match "kubectl.exe").href
+    }
+catch
+    {
+        Write-Warning "Error Parsing Link"
+        Break
+    }
+Write-Host -ForegroundColor White "==>starting Download from $downloadlink using Bitstransfer"
+Start-BitsTransfer $downloadlink -DisplayName "Getting KubeCTL from $downloadlink" -Destination $Downloadlocation
+$Downloadfile = Join-Path $Downloadlocation "kubectl.exe"
+Unblock-File $Downloadfile
+Write-Host -ForegroundColor White "==>starting '$Downloadfile version'"
+.$Downloadfile version
+$Kube_Local = New-Item -ItemType directory "$($HOME)/.kube" -force
+Write-Host
+Write-Host -ForegroundColor Magenta "You can now start kubectl from $Downloadfile copy your remote kubernetes cluster information to $($Kube_Local.fullname)/config "
 
 <# firefox #>
 $url = "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=en-US"
@@ -77,34 +96,32 @@ Write-Output "Installing go-lang..."
 Install-MSIProduct -Path $filename -PassThru -Force
 
 <# .net framework 4.7.x #>
-$url = "https://dotnet.microsoft.com/download/thank-you/net472"
-$filename = "$PSScriptRoot\downloads\dotnet472.exe"
+$url = "http://go.microsoft.com/fwlink/?linkid=863265"
+$filename = "$PSScriptRoot\downloads\NDP472-KB4054530-x86-x64-AllOS-ENU.exe"
 $start_time = Get-Date
 Write-Output "Downloading .Net Framework 4.7.2..."
 Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing .Net Framework 4.7.2..."
-Install-MSIProduct -Path $filename -PassThru -Force
+$exeProcess = Start-Process -FilePath $filename -ArgumentList "/q /norestart" -Wait -Verb RunAs 
 
-<# sourcetree #>
-$url = "https://product-downloads.atlassian.com/software/sourcetree/windows/ga/SourceTreeSetup-3.0.15.exe"
-$filename = "$PSScriptRoot\downloads\sourcetree-installer.exe"
+<# python #>
+$url = "https://www.python.org/ftp/python/3.7.0/python-3.7.0-amd64.exe"
+$filename = "$PSScriptRoot\downloads\python370-installer.exe"
 $start_time = Get-Date
-Write-Output "Downloading sourcetree..."
+Write-Output "Downloading python..."
 Start-BitsTransfer -Source $url -Destination $filename
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
-Write-Output "Installing sourcetree..."
+Write-Output "Installing python..."
 $exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
 
 <# vscode #>
-$url = "https://go.microsoft.com/fwlink/?Linkid=852157"
-$filename = "$PSScriptRoot\downloads\vscode-installer.exe"
-$start_time = Get-Date
-Write-Output "Downloading vscode..."
-Start-BitsTransfer -Source $url -Destination $filename
-Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
-Write-Output "Installing vscode..."
-$exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
+$url = "https://raw.githubusercontent.com/PowerShell/vscode-powershell/master/scripts/Install-VSCode.ps1"
+$filename = "$PSScriptRoot\downloads\Install-VSCode.ps1"
+Write-Output "Fetching install script for Visual Studio Code..."
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
+Write-Output "Installing Visual Studio Code..."
+& $filename
 
 <# 7zip #>
 $url = "https://www.7-zip.org/a/7z1806-x64.msi"
@@ -116,7 +133,6 @@ Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing 7zip..."
 Install-MSIProduct -Path $filename -PassThru -Force
 
-
 <# We're cheating here a bit and relocating all binaries we download from Github into #>
 <# the C:\Windows\System32 folder so that they are automatically on the PATH #>
 
@@ -125,52 +141,47 @@ $url = "https://github.com/cloudfoundry/bosh-cli/releases/download/v5.4.0/bosh-c
 $filename = "$PSScriptRoot\downloads\bosh.exe"
 $start_time = Get-Date
 Write-Output "Downloading bosh..."
-<#Start-BitsTransfer -Source $url -Destination $filename #>
 Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing bosh..."
-Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
+Move-Item -Path $filename -Destination $sysdir
 
 <# fly #>
 $url = "https://github.com/concourse/fly/releases/download/v4.2.2/fly_windows_amd64.exe"
 $filename = "$PSScriptRoot\downloads\fly.exe"
 $start_time = Get-Date
 Write-Output "Downloading fly..."
-<#Start-BitsTransfer -Source $url -Destination $filename #>
 Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing fly..."
-Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
+Move-Item -Path $filename -Destination $sysdir
 
 <# jq #>
 $url = "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe"
 $filename = "$PSScriptRoot\downloads\jq.exe"
 $start_time = Get-Date
 Write-Output "Downloading jq..."
-<#Start-BitsTransfer -Source $url -Destination $filename #>
 Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing jq..."
-Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
+Move-Item -Path $filename -Destination $sysdir
 
 <# om #>
 $url = "https://github.com/pivotal-cf/om/releases/download/0.51.0/om-windows.exe"
 $filename = "$PSScriptRoot\downloads\om.exe"
 $start_time = Get-Date
 Write-Output "Downloading om..."
-<#Start-BitsTransfer -Source $url -Destination $filename #>
 Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing om..."
-Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
+Move-Item -Path $filename -Destination $sysdir
 
 <# pivnet #>
 $url = "https://github.com/pivotal-cf/pivnet-cli/releases/download/v0.0.55/pivnet-windows-amd64-0.0.55"
 $filename = "$PSScriptRoot\downloads\pivnet.exe"
 $start_time = Get-Date
 Write-Output "Downloading pivnet..."
-<#Start-BitsTransfer -Source $url -Destination $filename #>
 Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing pivnet..."
-Move-Item -Path $filename -Destination [System.Environment]::SystemDirectory
+Move-Item -Path $filename -Destination $sysdir
