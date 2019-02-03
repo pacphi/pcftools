@@ -56,7 +56,7 @@ and scripts for
 
 - [x] macOS
 - [x] Windows 10
-- [ ] Windows Server 2016
+- [x] Windows Server 2016
 
 underneath the `builds` folder
 
