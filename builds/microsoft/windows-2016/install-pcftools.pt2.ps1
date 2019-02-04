@@ -1,5 +1,6 @@
 <# Installs PCF Tools on Windows 2016 Server :: part 2 #>
 
+[Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
 if (-not (test-path "$env:ProgramFiles\7-Zip\7z.exe")) { throw "$env:ProgramFiles\7-Zip\7z.exe needed" }
 set-alias 7z "$env:ProgramFiles\7-Zip\7z.exe" 
 $sysdir = "C:\Windows\System32"

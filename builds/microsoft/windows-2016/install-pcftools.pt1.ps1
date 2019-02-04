@@ -1,9 +1,9 @@
 <# Installs PCF Tools on Windows 2016 Server :: part 1 #>
 
+[Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
 $sysdir = "C:\Windows\System32"
-
-Install-Module -Name Carbon -Force -AcceptLicense
-Install-Module -Name MSI -Force -AcceptLicense
+Install-Module -Name Carbon -Force
+Install-Module -Name MSI -Force
 
 <# Create a directory that will be the home for all downloaded artifacts #>
 Write-Output "Creating downloads directory..."
@@ -115,13 +115,15 @@ Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing python..."
 $exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
 
-<# vscode #>
-$url = "https://raw.githubusercontent.com/PowerShell/vscode-powershell/master/scripts/Install-VSCode.ps1"
-$filename = "$PSScriptRoot\downloads\Install-VSCode.ps1"
-Write-Output "Fetching install script for Visual Studio Code..."
+<# atom #>
+$url = "https://github.com/atom/atom/releases/download/v1.34.0/AtomSetup-x64.exe"
+$filename = "$PSScriptRoot\downloads\AtomSetup-x64.exe"
+$start_time = Get-Date
+Write-Output "Downloading atom..."
 Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
-Write-Output "Installing Visual Studio Code..."
-& $filename
+Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+Write-Output "Installing atom..."
+$exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
 
 <# 7zip #>
 $url = "https://www.7-zip.org/a/7z1806-x64.msi"
