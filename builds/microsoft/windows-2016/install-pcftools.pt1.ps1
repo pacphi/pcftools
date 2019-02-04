@@ -125,6 +125,16 @@ Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing 7zip..."
 Install-MSIProduct -Path $filename -PassThru -Force
 
+$url = "https://winscp.net/download/WinSCP-5.13.7-Setup.exe"
+$filename = "$PSScriptRoot\downloads\winscp-installer.exe"
+$start_time = Get-Date
+Write-Output "Downloading winscp..."
+Start-BitsTransfer -Source $url -Destination $filename
+Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+Write-Output "Installing winscp..."
+$exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
+
+
 <# We're cheating here a bit and relocating all binaries we download from Github into #>
 <# the C:\Windows\System32 folder so that they are automatically on the PATH #>
 
