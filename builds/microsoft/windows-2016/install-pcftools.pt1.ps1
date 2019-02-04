@@ -2,8 +2,8 @@
 
 $sysdir = "C:\Windows\System32"
 
-Install-Module -Name Carbon
-Install-Module -Name MSI
+Install-Module -Name Carbon -Force -AcceptLicense
+Install-Module -Name MSI -Force -AcceptLicense
 
 <# Create a directory that will be the home for all downloaded artifacts #>
 Write-Output "Creating downloads directory..."
