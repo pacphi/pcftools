@@ -115,16 +115,6 @@ Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing python..."
 $exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
 
-<# atom #>
-$url = "https://github.com/atom/atom/releases/download/v1.34.0/AtomSetup-x64.exe"
-$filename = "$PSScriptRoot\downloads\AtomSetup-x64.exe"
-$start_time = Get-Date
-Write-Output "Downloading atom..."
-Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
-Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
-Write-Output "Installing atom..."
-$exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
-
 <# 7zip #>
 $url = "https://www.7-zip.org/a/7z1806-x64.msi"
 $filename = "$PSScriptRoot\downloads\7z.msi"

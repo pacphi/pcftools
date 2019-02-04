@@ -39,6 +39,16 @@ Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing terraform..."
 Move-Item -Path "$PSScriptRoot\downloads\terraform.exe" -Destination $sysdir
 
+<# atom #>
+$url = "https://github.com/atom/atom/releases/download/v1.34.0/AtomSetup-x64.exe"
+$filename = "$PSScriptRoot\downloads\AtomSetup-x64.exe"
+$start_time = Get-Date
+Write-Output "Downloading atom..."
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
+Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+Write-Output "Installing atom..."
+$exeProcess = Start-Process -FilePath $filename -ArgumentList "/S","/v","/qn" -NoNewWindow -Wait -PassThru
+
 <# Now we'll cleanup after ourselves #>
 Write-Output "Deleting downloads directory..."
 Remove-Item $PSScriptRoot\downloads -Force -Recurse
