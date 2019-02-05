@@ -34,3 +34,20 @@ install-pcftools.pt2.bat
 * cred-alert
 * texplate
 * uaac
+
+
+## Post install notes
+
+If you really, really want `uaac` available, visit https://rubyinstaller.org, then download and install the [latest](https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-2.6.1-1/rubyinstaller-devkit-2.6.1-1-x64.exe) available version of RubyInstaller for Windows.
+
+Then open a `cmd` shell as an Administrator and run
+
+```
+gem uninstall eventmachine
+gem install eventmachine --platform ruby
+git clone https://github.com/cloudfoundry/cf-uaac.git
+cd cf-uaac
+bundle install 
+gem build cf-uaac.gemspec 
+gem install cf-uaac*.gem
+```
