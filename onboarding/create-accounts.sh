@@ -63,7 +63,7 @@ do
 			org_role="OrgAuditor"
 			cf set-org-role "$user_name" $org_name "$org_role"
 		else
-			if [ array_contains org_rolearray "$org_role" && true || false ]; then
+			if array_contains org_rolearray "$org_role"; then
 				cf set-org-role "$user_name" "$org_name" "$org_role"
 			else
 				echo -e "Org role $org_role is invalid for $user_name.  $user_name is not assigned to any organization!\n"
@@ -73,7 +73,7 @@ do
 			space_role="SpaceDeveloper"
 			cf set-space-role "$user_name" "$org_name" "$space_name" "$space_role"
 		else
-			if [ array_contains space_rolearray "$space_role" && true || false ]; then
+			if array_contains space_rolearray "$space_role"; then
 				cf set-org-role "$user_name" "$org_name" "$org_role" "$space_role"
 			else
 				echo -e "Space role $space_role is invalid for $user_name.  $user_name is not assigned to any space!\n"
