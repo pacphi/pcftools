@@ -50,15 +50,15 @@ IFS=$'\n'
 for j in $(cat $inputfile)
 do
 	succeeded=false
-    user_name=$( echo "$j" | cut -d\, -f1)
+	user_name=$( echo "$j" | cut -d\, -f1)
 	password="$(openssl rand -base64 16)
 	org_role=$( echo "$j" | cut -d\, -f2)
 	space_role=$( echo "$j" | cut -d\, -f3)
 
 	echo -e "Processing account onboarding request for: \n\tusername=$user_name\n\torganization=$org_name\n\tspace=$space_name\n\torg_role=$organization_role\n\tspace_role=$space_role"
-	
+
 	if [ -z "$user_name" ] && [ -z "$org_name" ] && [ -z "$space_name" ] ;then
-		cf create-user "$user_name" "
+		cf create-user "$user_name"
 		if [ -z "$org_role" ]; then
 			org_role="OrgAuditor"
 			cf set-org-role "$user_name" $org_name "$org_role"
