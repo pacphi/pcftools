@@ -70,6 +70,10 @@ As mentioned in the prerequisites `pcftools` assumes a jumpbox already exists.  
 * [terraforming-azure](https://github.com/pivotal-cf/terraforming-azure)
 * [terraforming-gcp](https://github.com/pivotal-cf/terraforming-gcp)
 
+## Bonus Material
+
+Check out the account onboarding script [here](onboarding).
+
 ## Contributing
 
 Pull requests welcomed!  (But as you'll notice there's not much here).
