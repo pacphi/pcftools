@@ -51,3 +51,21 @@ bundle install
 gem build cf-uaac.gemspec 
 gem install cf-uaac*.gem
 ```
+
+## to enable Windows Subsystem for Linux
+
+Have a look a look at both the [installation](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and [troubleshooting](https://docs.microsoft.com/en-us/windows/wsl/troubleshooting) guides.
+
+> You'll need to upgrade to Windows 10 build 16215 or later
+
+### tl;dr
+
+1. Open Powershell as an Administrator and execute
+
+    ```
+    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+    ```
+
+2. Reboot
+
+3. Visit the Microsoft Store and choose your [favorite](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab) Linux distribution to install
