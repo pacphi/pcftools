@@ -61,20 +61,26 @@ do
 		cf create-user "$user_name"
 		if [ -z "$org_role" ]; then
 			org_role="OrgAuditor"
-			cf set-org-role "$user_name" $org_name "$org_role"
+			cf set-org-role "$user_name" $org" "$org_role"
 		else
 			if array_contains org_rolearray "$org_role"; then
-				cf set-org-role "$user_name" "$org_name" "$org_role"
+				cf set-org-role "$user_name" "$org" "$org_role"
 			else
 				echo -e "Org role $org_role is invalid for $user_name.  $user_name is not assigned to any organization!\n"
 			fi
 		fi
 		if [ -z "$space_role" ]; then
 			space_role="SpaceDeveloper"
-			cf set-space-role "$user_name" "$org_name" "$space_name" "$space_role"
+			for space in "${space_namearray[@]}"
+			do
+				cf set-space-role "$user_name" "$org" "$space" "$space_role"
+			done
 		else
 			if array_contains space_rolearray "$space_role"; then
-				cf set-org-role "$user_name" "$org_name" "$org_role" "$space_role"
+				for space in "${space_namearray[@]}"
+				do
+					cf set-space-role "$user_name" "$org" "$space" "$space_role"
+				done
 			else
 				echo -e "Space role $space_role is invalid for $user_name.  $user_name is not assigned to any space!\n"
 			fi
