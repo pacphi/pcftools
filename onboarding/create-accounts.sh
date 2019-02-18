@@ -55,9 +55,9 @@ do
 	org_role=$( echo "$j" | cut -d\, -f2)
 	space_role=$( echo "$j" | cut -d\, -f3)
 
-	echo -e "Processing account onboarding request for: \n\tusername=$user_name\n\torganization=$org_name\n\tspace=$space_name\n\torg_role=$organization_role\n\tspace_role=$space_role"
+	echo -e "Processing account onboarding request for: \n\tusername=$user_name\n\torganization=$org\n\torg_role=$organization_role\n\tspace_role=$space_role"
 
-	if [ -z "$user_name" ] && [ -z "$org_name" ] && [ -z "$space_name" ] ;then
+	if [ -z "$user_name" ];then
 		cf create-user "$user_name"
 		if [ -z "$org_role" ]; then
 			org_role="OrgAuditor"
