@@ -33,6 +33,14 @@ array_contains () {
     return $in
 }
 
+join_by () {
+	local d=$1
+	shift
+	echo -n "$1"
+	shift
+	printf "%s" "${@/#/$d}"
+}
+
 if [ ! -f "$inputfile" ] || [ -z "$org" ]; then
     echo "Usage: create-accounts.sh {filename.csv} {organization name}";
     exit 1;
@@ -57,8 +65,8 @@ do
 
 	echo -e "Processing account onboarding request for: \n\tusername=$user_name\n\torganization=$org\n\torg_role=$organization_role\n\tspace_role=$space_role"
 
-	if [ -z "$user_name" ];then
-		cf create-user "$user_name"
+	if [ ! -z "$user_name" -a "$user_name" != " " ];then
+		cf create-user "$user_name" "$password"
 		if [ -z "$org_role" ]; then
 			org_role="OrgAuditor"
 			cf set-org-role "$user_name" $org" "$org_role"
@@ -91,6 +99,11 @@ do
 	fi
 
 	if [ "$succeeded" = true]; then
-		echo -e "Succeeded! Login credentials are $user_name / $password and this account has org_role set to $org_role and space_role set to $space_role".
+		spaces=$(join_by , "${spacename_array[@]}")
+		echo "Succeeded!"
+		echo "Login credentials are $user_name / $password"
+		echo "This account has access to $org and $spaces"
+		echo "where the organization role is set to $org_role"
+		echo "and space role (for each space) is set to $space_role"
 	fi
 done
