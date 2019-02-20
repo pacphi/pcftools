@@ -29,6 +29,7 @@ install-pcftools.pt2.ps1
 ## What's missing? =(
 
 * cred-alert
+* kibosh
 * texplate
 * uaac
 

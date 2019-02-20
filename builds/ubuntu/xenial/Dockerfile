@@ -4,11 +4,13 @@ LABEL author=cphillipson@pivotal.io
 # Welcome to PCF-tools!
 # This image installs the following versions of CLIs on an Ubuntu Xenial image
 
-ENV BOSH_VERSION=5.4.0 \
+ENV BAZAAR_VERSION=0.1.25 \
+    BOSH_VERSION=5.4.0 \
     CF_VERSION=6.42.0 \
     CREDALERT_VERSION=2018-12-07-21-29-15 \
     CREDHUB_VERSION=2.2.1 \
     FLY_VERSION=4.2.2 \
+    KIBOSH_VERSION=0.1.26 \
     KUBECTL_VERSION=1.13.0 \
     OM_VERSION=0.51.0 \
     PIVNET_VERSION=0.0.55 \
@@ -19,7 +21,7 @@ ENV BOSH_VERSION=5.4.0 \
 
 RUN mkdir downloads && cd downloads && \
       apt update && \
-      apt install build-essential curl git jq python-pip python-dev ruby-dev sudo wget unzip -y && \
+      apt install build-essential curl git jq nodejs npm python-pip python-dev ruby-dev sudo wget unzip -y && \
       apt install apt-transport-https lsb-release software-properties-common dirmngr -y && \
       sudo pip install --upgrade pip && \
       sudo pip install --upgrade virtualenv && \
@@ -39,6 +41,10 @@ RUN mkdir downloads && cd downloads && \
       curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
       apt update -y && apt install google-cloud-sdk -y && \
       gem install cf-uaac && \
+      wget https://github.com/cf-platform-eng/kibosh/releases/download/${KIBOSH_VERSION}/bazaarcli-${BAZAAR_VERSION}.linux && \
+      mv bazaarcli-${BAZAAR_VERSION}.linux bazaarcli && \
+      chmod +x bazaarcli && \
+      sudo mv bazaarcli /usr/local/bin && \
       wget https://github.com/cloudfoundry/bosh-cli/releases/download/v${BOSH_VERSION}/bosh-cli-${BOSH_VERSION}-linux-amd64 && \
       mv bosh-cli-${BOSH_VERSION}-linux-amd64 bosh && \
       chmod +x bosh && \
@@ -57,6 +63,10 @@ RUN mkdir downloads && cd downloads && \
       mv fly_linux_amd64 fly && \
       chmod +x fly && \
       sudo mv fly /usr/local/bin && \
+      wget https://github.com/cf-platform-eng/kibosh/releases/download/${KIBOSH_VERSION}/kibosh-${BAZAAR_VERSION}.linux && \
+      mv kibosh-${BAZAAR_VERSION}.linux kibosh && \
+      chmod +x kibosh && \
+      sudo mv kibosh /usr/local/bin && \
       curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
       chmod +x kubectl && \
       sudo mv kubectl /usr/local/bin && \

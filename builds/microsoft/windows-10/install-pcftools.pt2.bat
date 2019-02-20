@@ -20,6 +20,10 @@ wget https://github.com/cloudfoundry-incubator/credhub-cli/releases/download/2.2
 7z x credhub-windows-2.2.1.tar
 move /y credhub.exe %SystemRoot%\System32
 
+REM mc
+wget https://dl.minio.io/client/mc/release/windows-amd64/mc.exe
+move /y mc.exe %SystemRoot%\System32
+
 REM om
 wget https://github.com/pivotal-cf/om/releases/download/0.51.0/om-windows.exe
 ren om-windows.exe om.exe

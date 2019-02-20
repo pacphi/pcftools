@@ -4,12 +4,14 @@ LABEL author=cphillipson@pivotal.io
 # Welcome to PCF-tools!
 # This image installs the following versions of CLIs on a CentOS 7 image
 
-ENV BOSH_VERSION=5.4.0 \
+ENV BAZAAR_VERSION=0.1.25 \
+    BOSH_VERSION=5.4.0 \
     CF_VERSION=6.42.0 \
     CREDALERT_VERSION=2018-12-07-21-29-15 \
     CREDHUB_VERSION=2.2.1 \
     FLY_VERSION=4.2.2 \
     GOOGLE_CLOUD_SDK_VERSION=232.0.0 \
+    KIBOSH_VERSION=0.1.26 \
     KUBECTL_VERSION=1.13.0 \
     OM_VERSION=0.51.0 \
     PIVNET_VERSION=0.0.55 \
@@ -21,7 +23,7 @@ ENV BOSH_VERSION=5.4.0 \
 RUN mkdir downloads && cd downloads && \
       yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
       yum -y update && \
-      yum -y install curl git jq python36u python36u-libs python36u-devel python36u-pip sudo unzip wget && \
+      yum -y install curl git jq nodejs npm python36u python36u-libs python36u-devel python36u-pip sudo unzip wget && \
       yum -y install gcc-c++ patch readline readline-devel which zlib zlib-devel \
         libyaml-devel libffi-devel openssl-devel make \
         bzip2 autoconf automake libtool bison iconv-devel sqlite-devel && \
@@ -43,6 +45,10 @@ RUN mkdir downloads && cd downloads && \
       rbenv install 2.6.1 && rbenv global 2.6.1 && \
       echo "gem: --no-ri --no-doc" > ~/.gemrc && \
       gem install cf-uaac && \
+      wget https://github.com/cf-platform-eng/kibosh/releases/download/${KIBOSH_VERSION}/bazaarcli-${BAZAAR_VERSION}.linux && \
+      mv bazaarcli-${BAZAAR_VERSION}.linux bazaarcli && \
+      chmod +x bazaarcli && \
+      sudo mv bazaarcli /usr/local/bin && \
       wget https://github.com/cloudfoundry/bosh-cli/releases/download/v${BOSH_VERSION}/bosh-cli-${BOSH_VERSION}-linux-amd64 && \
       mv bosh-cli-${BOSH_VERSION}-linux-amd64 bosh && \
       chmod +x bosh && \
@@ -61,9 +67,16 @@ RUN mkdir downloads && cd downloads && \
       mv fly_linux_amd64 fly && \
       chmod +x fly && \
       sudo mv fly /usr/local/bin && \
+      wget https://github.com/cf-platform-eng/kibosh/releases/download/${KIBOSH_VERSION}/kibosh-${BAZAAR_VERSION}.linux && \
+      mv kibosh-${BAZAAR_VERSION}.linux kibosh && \
+      chmod +x kibosh && \
+      sudo mv kibosh /usr/local/bin && \
       curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
       chmod +x kubectl && \
       sudo mv kubectl /usr/local/bin && \
+      wget https://dl.minio.io/client/mc/release/linux-amd64/mc && \
+      chmod +x mc && \
+      sudo mv mc /usr/local/bin && \
       wget https://github.com/pivotal-cf/om/releases/download/${OM_VERSION}/om-linux && \
       mv om-linux om && \
       chmod +x om && \

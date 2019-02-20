@@ -105,6 +105,16 @@ Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing .Net Framework 4.7.2..."
 $exeProcess = Start-Process -FilePath $filename -ArgumentList "/q /norestart" -Wait -Verb RunAs 
 
+<# nodejs #>
+$url = "https://nodejs.org/dist/v10.15.1/node-v10.15.1-x64.msi"
+$filename = "$PSScriptRoot\downloads\node.msi"
+$start_time = Get-Date
+Write-Output "Downloading nodejs..."
+Start-BitsTransfer -Source $url -Destination $filename
+Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+Write-Output "Installing nodejs..."
+Install-MSIProduct -Path $filename -PassThru -Force
+
 <# python #>
 $url = "https://www.python.org/ftp/python/3.7.0/python-3.7.0-amd64.exe"
 $filename = "$PSScriptRoot\downloads\python370-installer.exe"
@@ -166,6 +176,16 @@ Write-Output "Downloading jq..."
 Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 Write-Output "Installing jq..."
+Move-Item -Path $filename -Destination $sysdir
+
+<# mc #>
+$url = "https://dl.minio.io/client/mc/release/windows-amd64/mc.exe"
+$filename = "$PSScriptRoot\downloads\mc.exe"
+$start_time = Get-Date
+Write-Output "Downloading mc..."
+Invoke-WebRequest -Uri $url -OutFile $filename -PassThru
+Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+Write-Output "Installing mc..."
 Move-Item -Path $filename -Destination $sysdir
 
 <# om #>

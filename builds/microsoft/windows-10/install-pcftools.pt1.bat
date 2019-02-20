@@ -29,6 +29,8 @@ set Arr[18]=curl
 set Arr[19]=7zip
 set Arr[20]=postman
 set Arr[21]=psscriptanalyzer
+set Arr[22]=nodejs
+set Arr[23]=yarn
 
 set "x=0"
 

@@ -15,7 +15,10 @@ Tools included
  - [x] [gcloud](https://cloud.google.com/sdk/)
  - [x] [git](https://git-scm.com)
  - [x] [jq](https://stedolan.github.io/jq/)
+ - [x] [kibosh](https://github.com/cf-platform-eng/kibosh)
  - [x] [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+ - [x] [mc](https://www.minio.io/downloads.html#download-client)
+ - [x] [nodejs](https://nodejs.org/en/) and [npm](https://www.npmjs.com)
  - [x] [om](https://github.com/pivotal-cf/om)
  - [x] [pivnet](https://github.com/pivotal-cf/pivnet-cli)
  - [x] [terraform](https://www.terraform.io/intro/index.html)
@@ -36,6 +39,7 @@ Tools included
 ### with Install scripts
 
  * a pre-installed, supported operating system
+
 
 ## How to clone
 
@@ -60,6 +64,13 @@ and scripts for
 
 underneath the `builds` folder
 
+
+## What about PKS?
+
+The [pks](https://pivotal.io/platform/pivotal-container-service) CLI is available for download from [pivnet](https://network.pivotal.io), [here](https://network.pivotal.io/products/pivotal-container-service/).
+
+> You'll need to [register](https://account.run.pivotal.io/z/uaa/sign-up) for an account and/or use UAA API token to fetch it
+
 ## Additional notes
 
 Oftentimes we're operating in a restricted environment where resources that get created within a public cloud are not assigned public IP addresses. In this situation we may desire a network topology where the jumpbox is either in its own virtual network peered with or stood up within an existing virtual network that hosts a curated collection of common services for CI/CD.
@@ -76,4 +87,4 @@ Check out the account onboarding script [here](onboarding).
 
 ## Contributing
 
-Pull requests welcomed!  (But as you'll notice there's not much here).
+Pull requests are welcomed!

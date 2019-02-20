@@ -7,7 +7,9 @@
 
 set -e
 
+export BAZAAR_VERSION=0.1.25
 export CREDALERT_VERSION=2018-12-07-21-29-15
+export KIBOSH_VERSION=0.1.26
 export TEXPLATE_VERSION=0.3.0
 
 # Install Homebrew
@@ -21,7 +23,7 @@ brew tap genevieve/tap
 brew tap starkandwayne/cf
 
 # Declare installation packages
-brews=( "awscli" "azure-cli" "az-automation" "bosh-cli" "cf-cli" "credhub-cli" "go" "starkandwayne/cf/govc" "jq" "kubernetes-cli" "kubectx" "wget" "git" "starkandwayne/cf/om" "openssl" "python3" "ruby" "pivnet-cli" "starkandwayne/cf/riff" "terraform" "tmux" "wireshark" "wget" "zsh" )
+brews=( "awscli" "azure-cli" "az-automation" "bosh-cli" "cf-cli" "credhub-cli" "go" "starkandwayne/cf/govc" "jq" "kubernetes-cli" "kubectx" "minio/stable/mc" "node" "wget" "git" "starkandwayne/cf/om" "openssl" "python3" "ruby" "pivnet-cli" "starkandwayne/cf/riff" "terraform" "tmux" "wireshark" "wget" "zsh" )
 casks=( "google-cloud-sdk" "iterm2" "sourcetree" "visual-studio-code" )
 
 # Install packages
@@ -48,3 +50,13 @@ wget https://github.com/pivotal-cf/texplate/releases/download/v${TEXPLATE_VERSIO
 mv texplate_darwin_amd64 texplate
 chmod +x texplate
 sudo mv texplate /usr/local/bin
+
+wget https://github.com/cf-platform-eng/kibosh/releases/download/${KIBOSH_VERSION}/bazaarcli-${BAZAAR_VERSION}.mac && \
+mv bazaarcli-${BAZAAR_VERSION}.mac bazaarcli && \
+chmod +x bazaarcli && \
+sudo mv bazaarcli /usr/local/bin && \
+
+wget https://github.com/cf-platform-eng/kibosh/releases/download/${KIBOSH_VERSION}/kibosh-${BAZAAR_VERSION}.darwin && \
+mv kibosh-${BAZAAR_VERSION}.darwin kibosh && \
+chmod +x kibosh && \
+sudo mv kibosh /usr/local/bin && \

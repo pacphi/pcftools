@@ -32,6 +32,7 @@ install-pcftools.pt2.bat
 ## What's missing? =(
 
 * cred-alert
+* kibosh
 * texplate
 * uaac
 
