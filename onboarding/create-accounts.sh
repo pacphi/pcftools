@@ -78,7 +78,7 @@ do
 			org_role="OrgAuditor";
 		fi
 
-		if array_contains org_rolearray "$org_role"; then
+		if in_array org_rolearray "$org_role"; then
 			for org in "${org_namearray[@]}"; do
 				cf set-org-role "$user_name" "$org" "$org_role";
 			done
@@ -91,7 +91,7 @@ do
 			space_role="SpaceDeveloper";
 		fi
 
-		if array_contains space_rolearray "$space_role"; then
+		if in_array space_rolearray "$space_role"; then
 			for org in "${org_namearray[@]}"; do
 				for space in "${space_namearray[@]}"; do
 					cf set-space-role "$user_name" "$org" "$space" "$space_role";
