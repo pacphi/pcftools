@@ -1,27 +1,23 @@
 #!/bin/bash
 
-# SIMPLE PAS ACCOUNT CREATION SCRIPT
+# SIMPLE PAS ACCOUNT ONBOARD SCRIPT
 # @author cphillipson@pivotal.io
 # @version 0.1
 #
-# This script creates new user accounts, creates orgs and spaces, 
-# then assigns org and space roles to all org/space combinations on a Pivotal Application Service foundation
-# You must be logged in as an administrator to create accounts
-#
-# The current implementation does not handle exceptional cases like
-#    - account already exists
-#    - organization already exists
-#
+# Existing user accounts are assigned org and space roles for existing org and spaces on a Pivotal Application Service foundation
+# You must be logged in as an administrator to onboard accounts
+
 set -e
 
 inputfile=$1
-org=$2
+orgs=$2
 spaces=$3
 
 org_rolearray=( 'OrgManager' 'OrgAuditor' 'BillingManager' )
 space_rolearray=( 'SpaceManager' 'SpaceAuditor' 'SpaceDeveloper' )
 
 IFS=","
+org_namearray=($orgs)
 space_namearray=($spaces)
 
 in_array() {
@@ -43,19 +39,10 @@ join_by () {
 	printf "%s" "${@/#/$d}"
 }
 
-if [ ! -f "$inputfile" ] || [ -z "$org" ] || [ -z "$spaces" ]; then
-    echo "Usage: create-accounts.sh {filename.csv} {comma-separated list of organization names} {comma-separated list of space names}";
+if [ ! -f "$inputfile" ] || [ -z "$orgs" ] || [ -z "$spaces" ]; then
+    echo "Usage: onboard-accounts.sh {filename.csv} {comma-separated list of organization names} {comma-separated list of space names}";
     exit 1;
 fi
-
-for org in "${org_namearray[@]}"
-do
-	cf create-org "$org"
-	for s in "${space_namearray[@]}"
-	do
-		cf create-space "$s" -o "$org";
-	done
-done
 
 unset IFS
 
@@ -71,7 +58,6 @@ do
 
 	if [ -n "$user_name" ] && [ "$user_name" != " " ]
 	then
-		cf create-user "$user_name" "$password";
 		if [ -z "$org_role" ]
 		then
 			org_role="OrgAuditor";
@@ -82,7 +68,7 @@ do
 				cf set-org-role "$user_name" "$org" "$org_role";
 			done
 		else
-			echo -e "Org role $org_role is invalid for $user_name.  $user_name is not assigned to any organization!\n";
+			echo -e "Org role $org_role is invalid for $user_name.\n";
 		fi
 
 		if [ -z "$space_role" ]
@@ -98,7 +84,7 @@ do
 			done
 			succeeded=true;
 		else
-			echo -e "Space role $space_role is invalid for $user_name.  $user_name is not assigned to any space!\n";
+			echo -e "Space role $space_role is invalid for $user_name.\n";
 		fi
 
 	else
@@ -109,7 +95,6 @@ do
 	then
 		spaces=$(join_by , "${space_namearray[@]}");
 		echo "Succeeded!";
-		echo "Login credentials are $user_name / $password";
 		echo "This account has access to organizations [ $orgs ] and spaces [ $spaces ]";
 		echo "where the organization role is set to $org_role";
 		echo -e "and space role for each space is set to $space_role\n";

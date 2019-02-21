@@ -83,7 +83,7 @@ As mentioned in the prerequisites `pcftools` assumes a jumpbox already exists.  
 
 ## Bonus Material
 
-Check out the account onboarding and deletion scripts [here](onboarding).
+Check out the curated collection of onboarding and deletion scripts [here](onboarding).
 
 ## Contributing
 
