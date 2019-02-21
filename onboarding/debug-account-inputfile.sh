@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# SIMPLE PAS ACCOUNT CREATION SCRIPT
+# SIMPLE PAS ACCOUNT SHADOW CREATION SCRIPT
 # @author cphillipson@pivotal.io
 # @version 0.1
 #
-# This script creates new user accounts on a Pivotal Application Service foundation
-# You must be logged in as an administrator to create accounts
-#
-# The current implementation does not handle exceptional cases like
-#    - account already exists
-#    - organization already exists
-#
+# This script only echos the cf CLI commands that will be used to creates new user accounts on a Pivotal Application Service foundation
+# Use it to troubleshoot your input file
+
 set -e
 
 org=$2
@@ -20,17 +16,15 @@ org_rolearray=( 'OrgManager' 'OrgAuditor' 'BillingManager' )
 space_rolearray=( 'SpaceManager' 'SpaceAuditor' 'SpaceDeveloper' )
 space_namearray=( 'development' 'test' 'stage')
 
-array_contains () {
-    local array="$1[@]"
-    local seeking=$2
-    local in=1
-    for element in "${!array}"; do
-        if [ "$element" == "$seeking" ]; then
-            in=0
-            break
+in_array() {
+    local haystack=${1}[@]
+    local needle=${2}
+    for i in ${!haystack}; do
+        if [[ ${i} == ${needle} ]]; then
+            return 0
         fi
     done
-    return $in
+    return 1
 }
 
 join_by () {
@@ -46,11 +40,11 @@ if [ ! -f "$inputfile" ] || [ -z "$org" ]; then
     exit 1;
 fi
 
-cf create-org "$org"
-cf t -o "$org"
+echo "cf create-org \"$org\""
+echo "cf t -o \"$org\""
 for s in "${space_namearray[@]}"
 do
-	cf create-space "$s" -o "$org";
+	echo "cf create-space \"$s\" -o \"$org\"";
 done
 
 
@@ -66,15 +60,15 @@ do
 
 	if [ -n "$user_name" ] && [ "$user_name" != " " ]
 	then
-		cf create-user "$user_name" "$password";
+		echo "cf create-user \"$user_name\" \"$password\"";
 		if [ -z "$org_role" ]
 		then
 			org_role="OrgAuditor";
 		fi
 
-		if array_contains org_rolearray "$org_role"
+		if in_array org_rolearray "$org_role"
 		then
-			cf set-org-role "$user_name" "$org" "$org_role";
+			echo "cf set-org-role \"$user_name\" \"$org\" \"$org_role\"";
 		else
 			echo -e "Org role $org_role is invalid for $user_name.  $user_name is not assigned to any organization!\n";
 		fi
@@ -84,9 +78,9 @@ do
 			space_role="SpaceDeveloper";
 		fi
 
-		if array_contains space_rolearray "$space_role"; then
+		if in_array space_rolearray "$space_role"; then
 			for space in "${space_namearray[@]}"; do
-				cf set-space-role "$user_name" "$org" "$space" "$space_role";
+				echo "cf set-space-role \"$user_name\" \"$org\" \"$space\" \"$space_role\"";
 			done
 			succeeded=true;
 		else
