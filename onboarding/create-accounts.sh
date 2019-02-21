@@ -17,6 +17,7 @@ set -e
 inputfile=$1
 org=$2
 spaces=$3
+api_endpoint=$4
 
 org_rolearray=( 'OrgManager' 'OrgAuditor' 'BillingManager' )
 space_rolearray=( 'SpaceManager' 'SpaceAuditor' 'SpaceDeveloper' )
@@ -43,8 +44,8 @@ join_by () {
 	printf "%s" "${@/#/$d}"
 }
 
-if [ ! -f "$inputfile" ] || [ -z "$org" ] || [ -z "$spaces" ]; then
-    echo "Usage: create-accounts.sh {filename.csv} {comma-separated list of organization names} {comma-separated list of space names}";
+if [ ! -f "$inputfile" ] || [ -z "$org" ] || [ -z "$spaces" ] || [ -z "$api_endpoint" ]; then
+    echo "Usage: create-accounts.sh {filename.csv} {comma-separated list of organization names} {comma-separated list of space names} {api endpoint}";
     exit 1;
 fi
 
@@ -110,6 +111,7 @@ do
 		spaces=$(join_by , "${space_namearray[@]}");
 		echo "Succeeded!";
 		echo "Login credentials are $user_name / $password";
+		echo "This user may log in with [ cf login -u $user_name -p $password -a $api_endpoint --skip-ssl-validation ]";
 		echo "This account has access to organizations [ $orgs ] and spaces [ $spaces ]";
 		echo "where the organization role is set to $org_role";
 		echo -e "and space role for each space is set to $space_role\n";
