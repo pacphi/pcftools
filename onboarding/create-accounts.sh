@@ -23,6 +23,7 @@ org_rolearray=( 'OrgManager' 'OrgAuditor' 'BillingManager' )
 space_rolearray=( 'SpaceManager' 'SpaceAuditor' 'SpaceDeveloper' )
 
 IFS=","
+org_namearray=($orgs)
 space_namearray=($spaces)
 
 in_array() {
@@ -44,7 +45,7 @@ join_by () {
 	printf "%s" "${@/#/$d}"
 }
 
-if [ ! -f "$inputfile" ] || [ -z "$org" ] || [ -z "$spaces" ] || [ -z "$api_endpoint" ]; then
+if [ ! -f "$inputfile" ] || [ -z "$orgs" ] || [ -z "$spaces" ] || [ -z "$api_endpoint" ]; then
     echo "Usage: create-accounts.sh {filename.csv} {comma-separated list of organization names} {comma-separated list of space names} {api endpoint}";
     exit 1;
 fi
